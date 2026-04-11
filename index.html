@@ -9,7 +9,7 @@
 
         :root {
             --bg-color: #050505;
-            --accent-purple: #bc13fe; /* Твой фиолетовый */
+            --accent-purple: #bc13fe;
             --gray: #444;
             --pixel-font: 'Press Start 2P', cursive;
         }
@@ -40,7 +40,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         body::before {
@@ -59,7 +59,7 @@
             align-items: center;
             gap: 20px;
             width: 100%;
-            max-width: 550px; /* Значение из первого кода */
+            max-width: 550px;
         }
 
         .photo-row {
@@ -70,8 +70,8 @@
 
         .side-photo {
             flex: 1;
-            width: 50%;
-            height: 200px; /* Значение из первого кода */
+            width: 0;
+            aspect-ratio: 1 / 1;
             object-fit: cover;
             border: 4px double var(--accent-purple);
             padding: 5px;
@@ -88,7 +88,7 @@
         .card {
             background: rgba(0, 0, 0, 0.95);
             border: 4px double var(--accent-purple);
-            padding: 30px; /* Значение из первого кода */
+            padding: 30px;
             text-align: center;
             box-shadow: 10px 10px 0px rgba(188, 19, 254, 0.1);
             animation: fadeIn 0.8s ease-out;
@@ -96,7 +96,7 @@
         }
 
         h1 {
-            font-size: 1.1rem; /* Значение из первого кода */
+            font-size: 1.1rem;
             color: var(--accent-purple);
             text-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
             margin: 0 0 30px 0;
