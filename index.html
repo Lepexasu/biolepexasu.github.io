@@ -1,167 +1,254 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lepexasu | Bio</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lepexasu | Bio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a050a;
+      --accent: #ff2d95;                      /* основной розовый акцент */
+      --accent-soft: rgba(255, 45, 149, .35);
+      --accent-faint: rgba(255, 45, 149, .06);
+      --card-bg: rgba(20, 8, 16, .88);
+      --text: #fff0f8;
+      --muted: #8a9bb8;
+    }
 
-        :root {
-            --bg-color: #050505;
-            --accent-purple: #bc13fe;
-            --gray: #444;
-            --pixel-font: 'Press Start 2P', cursive;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 16px;
+    }
 
-        @keyframes blinker { 50% { opacity: 0; } }
-        .blink { animation: blinker 1s linear infinite; }
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -2;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(255,45,149,.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(255,120,200,.07) 0%, transparent 45%),
+        linear-gradient(180deg, #080408 0%, #120812 40%, #160a14 100%);
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(var(--accent-faint) 1px, transparent 1px),
+        linear-gradient(90deg, var(--accent-faint) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
 
-        * {
-            font-family: var(--pixel-font) !important;
-            image-rendering: pixelated;
-            box-sizing: border-box;
-        }
+    /* Эффект старого телевизора (линии развёртки) */
+    html::after {
+      content: " ";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 100;
+    }
 
-        body {
-            margin: 0;
-            background-color: var(--bg-color);
-            background-image: 
-                linear-gradient(0deg, rgba(188, 19, 254, 0.03) 2px, transparent 2px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.03) 2px, transparent 2px);
-            background-size: 40px 40px;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    .main-container {
+      width: 100%;
+      max-width: 550px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 34px;
+    }
 
-        body::before {
-            content: " ";
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 100;
-        }
+    /* ===== ПОЛАРОИДЫ С ФОТО ===== */
+    .photo-row {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      align-items: flex-start;
+    }
 
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 550px;
-        }
+    .photo {
+      flex: 1;
+      width: 0;
+      position: relative;
+      filter: drop-shadow(0 12px 25px rgba(0,0,0,.55));
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1), filter .3s ease;
+    }
+    .photo:nth-child(1) { transform: rotate(-2deg); }
+    .photo:nth-child(2) { transform: rotate(2deg); margin-top: 24px; }
 
-        .photo-row {
-            display: flex;
-            gap: 15px;
-            width: 100%;
-        }
+    .photo:hover {
+      transform: translateY(-10px) rotate(0) scale(1.04);
+      filter: drop-shadow(0 18px 35px rgba(255,45,149,.2));
+      z-index: 2;
+    }
 
-        .side-photo {
-            flex: 1;
-            width: 0;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border: 4px double var(--accent-purple);
-            padding: 5px;
-            background: rgba(188, 19, 254, 0.05);
-            animation: fadeIn 1s ease-out;
-            transition: 0.3s;
-        }
+    .photo::before, .photo::after {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      border: 2px solid var(--accent);
+      opacity: .8;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .photo::before { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+    .photo::after  { right: -5px; bottom: -5px; border-left: 0; border-top: 0; }
 
-        .side-photo:hover {
-            transform: scale(1.02);
-            filter: brightness(1.2);
-        }
+    .polaroid {
+      background: #fff0f8;
+      padding: 4% 4% 14%;
+      border-radius: 3px;
+      box-shadow: 0 1px 0 rgba(255,45,149,.9) inset, 0 4px 12px rgba(0,0,0,.35);
+    }
+    .polaroid img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #1a0a14;
+    }
 
-        .card {
-            background: rgba(0, 0, 0, 0.95);
-            border: 4px double var(--accent-purple);
-            padding: 30px;
-            text-align: center;
-            box-shadow: 10px 10px 0px rgba(188, 19, 254, 0.1);
-            animation: fadeIn 0.8s ease-out;
-            width: 100%;
-        }
+    /* ===== КАРТОЧКА ===== */
+    .card {
+      position: relative;
+      width: 100%;
+      padding: 34px 26px 30px;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-soft);
+      box-shadow:
+        0 0 30px rgba(255,45,149,.08),
+        inset 0 0 40px rgba(0,0,0,.4);
+    }
+    .card::before, .card::after {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      border: 2px solid var(--accent);
+      pointer-events: none;
+    }
+    .card::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+    .card::after  { right: -6px; bottom: -6px; border-left: 0; border-top: 0; }
 
-        h1 {
-            font-size: 1.1rem;
-            color: var(--accent-purple);
-            text-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
-            margin: 0 0 30px 0;
-        }
+    h1 {
+      display: inline-block;
+      font-family: 'VT323', monospace;
+      font-size: clamp(2.8rem, 10vw, 4rem);
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
 
-        .bio-text {
-            font-size: 0.65rem;
-            line-height: 1.8;
-            color: #eee;
-            margin-bottom: 20px;
-        }
+    /* Мигающий курсор как в терминале */
+    .blink { animation: blinker 1s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
 
-        .nav-label {
-            font-size: 0.5rem;
-            color: var(--gray);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
+    .bio-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .85rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: .9;
+      margin-bottom: 28px;
+    }
 
-        .social-block { display: flex; flex-direction: column; gap: 10px; }
+    .nav-label {
+      font-family: 'VT323', monospace;
+      font-size: 1.5rem;
+      color: var(--accent);
+      text-shadow: 0 0 12px rgba(255,45,149,.4);
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
 
-        .link-btn {
-            display: block;
-            padding: 12px;
-            border: 2px solid var(--accent-purple);
-            color: var(--accent-purple);
-            text-decoration: none;
-            font-size: 0.55rem;
-            text-align: center;
-            transition: 0.3s;
-        }
+    .social-block { display: flex; flex-direction: column; gap: 12px; }
 
-        .link-btn:hover {
-            background: var(--accent-purple);
-            color: #000;
-            box-shadow: 0 0 15px var(--accent-purple);
-        }
-    </style>
+    .link-btn {
+      display: block;
+      padding: 13px 10px;
+      border: 1.5px solid var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-align: center;
+      background: rgba(255,45,149,.03);
+      transition: transform .2s ease, background .25s, color .25s, box-shadow .25s, border-color .25s;
+    }
+    .link-btn:hover, .link-btn:focus-visible {
+      background: var(--accent);
+      color: #1a0412;
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(255,45,149,.55);
+      transform: scale(1.04);
+      outline: none;
+    }
+
+    /* линия-градиент внизу карточки */
+    .card .bar {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: .6;
+    }
+
+    @media (max-width: 480px) {
+      .photo-row { gap: 12px; }
+      .card { padding: 28px 16px 24px; }
+      .bio-text { letter-spacing: 3px; font-size: .75rem; }
+      .link-btn { letter-spacing: 3px; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="photo-row">
-            <img src="https://i.ibb.co/TBrxYC06/G0xw-MBQXMAAHpks.webp" class="side-photo" alt="Photo 1">
-            <img src="https://i.ibb.co/9mzw8918/Gla-I-6e-XUAAqvnb.webp" class="side-photo" alt="Photo 2">
+  <div class="main-container">
+    <div class="photo-row">
+      <div class="photo">
+        <div class="polaroid">
+          <img src="https://i.ibb.co/LDgq2TL0/c316345c15a40c2dd655711a38917832.jpg" alt="Photo 1">
         </div>
-
-        <div class="card">
-            <h1>Hello!!!<span class="blink">_</span></h1>
-            
-            <div class="bio-text">
-                The Info-Site Lepexasu
-            </div>
-
-            <div class="nav-label">--- Navigation ---</div>
-
-            <div class="social-block">
-                <a href="https://lepexasu.github.io/infolepexasu1/index2.html" class="link-btn">INFORMATION</a>
-                <a href="https://lepexasu.github.io/Hobbylepexasu/index3.html" class="link-btn">HOBBY</a>
-                <a href="https://lepexasu.github.io/Gamelepexasu/index4.html" class="link-btn">GAMES</a>
-                <a href="https://lepexasu.github.io/Lepexasufandoms/index5.html" class="link-btn">FANDOMS</a>
-            </div>
+      </div>
+      <div class="photo">
+        <div class="polaroid">
+          <img src="https://i.ibb.co/cXMMBdXF/b8aa4cbb6de0288f76d049b2a45c6697.jpg" alt="Photo 2">
         </div>
+      </div>
     </div>
+
+    <div class="card">
+      <h1>Hello!!!<span class="blink">_</span></h1>
+
+      <div class="bio-text">The Info-Site Lepexasu</div>
+
+      <div class="nav-label">--- Navigation ---</div>
+
+      <div class="social-block">
+        <a href="https://lepexasu.github.io/infolepexasu1/index2.html" class="link-btn">INFORMATION</a>
+        <a href="https://lepexasu.github.io/Hobbylepexasu/index3.html" class="link-btn">HOBBY</a>
+        <a href="https://lepexasu.github.io/Gamelepexasu/index4.html" class="link-btn">GAMES</a>
+        <a href="https://lepexasu.github.io/Lepexasufandoms/index5.html" class="link-btn">FANDOMS</a>
+      </div>
+
+      <div class="bar"></div>
+    </div>
+  </div>
 
 </body>
 </html>
